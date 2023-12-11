@@ -1,0 +1,40 @@
+name: Generate and Suggest Changes
+
+on:
+  pull_request:
+    paths:
+      - 'crates/generator/src/pkg/*.rs'
+
+jobs:
+  generate-and-suggest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+
+    - name: Install Development Packages
+      run: sudo apt-get update && sudo apt-get install -y libssl-dev libarchive-dev
+
+    - name: cargo install
+      run: cargo install just
+
+    - name: Run just generate
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: just generate
+
+    - uses: reviewdog/action-setup@v1
+      with:
+        reviewdog_version: latest
+
+    - name: Run reviewdog
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        reviewdog -fail-on-error -reporter=github-pr-review -diff="git diff" -f diff
