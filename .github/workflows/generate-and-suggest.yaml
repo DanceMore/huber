@@ -25,9 +25,7 @@ jobs:
       run: cargo install just
 
     - name: Run just generate
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: just generate
+      run: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} just generate
 
     - uses: reviewdog/action-setup@v1
       with:
