@@ -135,7 +135,7 @@ fn releases() -> Vec<Package> {
         jiq::release(),
         jless::release(),
         onefetch::release(),
-        renote::release(),
+        //renote::release(),
         gh::release(),
         dasel::release(),
         bat::release(),
