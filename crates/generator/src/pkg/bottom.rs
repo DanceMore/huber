@@ -56,6 +56,16 @@ pub fn release() -> Package {
                 tag_version_regex_template: None,
                 scan_dirs: None,
             }),
+            PackageTargetType::MacOSArm64(PackageManagement {
+                artifact_templates: vec!["{version}/bottom_aarch64-apple-darwin.tar.gz".to_string()],
+                executable_templates: None,
+                executable_mappings: None,
+                install_commands: None,
+                uninstall_commands: None,
+                upgrade_commands: None,
+                tag_version_regex_template: None,
+                scan_dirs: None,
+            }),
             PackageTargetType::Windows(PackageManagement {
                 artifact_templates: vec!["{version}/bottom_x86_64-pc-windows-msvc.zip".to_string()],
                 executable_templates: None,
